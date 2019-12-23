@@ -1,3 +1,5 @@
+// import script_utils as utils
+
 function init(context)
 {
     return {
@@ -47,6 +49,10 @@ function update(context)
         store: {
             bulletCounter: bulletCounter,
             power: 3
+        },
+        position: {
+            x: utils.add(entity.position.x, 1),
+            y: entity.position.y
         }
     };
 }
