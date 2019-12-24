@@ -51,7 +51,7 @@ function update(context)
             power: 3
         },
         position: {
-            x: utils.add(entity.position.x, 1),
+            x: utils.add(entity.position.x, 0.1),
             y: entity.position.y
         }
     };
