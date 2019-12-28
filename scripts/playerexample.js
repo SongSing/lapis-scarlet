@@ -22,7 +22,9 @@ function update(context)
 
     bulletCounter++;
 
-    if (keys.fire && bulletCounter >= 10)
+    const bulletGoal = 5;
+
+    if (keys.fire && bulletCounter >= bulletGoal)
     {
         bulletCounter = 0;
         fire = true;
@@ -30,7 +32,7 @@ function update(context)
 
     if (bulletCounter === 100)
     {
-        bulletCounter = 10;
+        bulletCounter = bulletGoal;
     }
 
     const stores = [];
@@ -49,10 +51,6 @@ function update(context)
         store: {
             bulletCounter: bulletCounter,
             power: 3
-        },
-        position: {
-            x: utils.add(entity.position.x, 0.1),
-            y: entity.position.y
         }
     };
 }

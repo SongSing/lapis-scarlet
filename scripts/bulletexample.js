@@ -1,8 +1,8 @@
 function update(context)
 {
-    const { entity, stage } = context;
+    const { entity, stage, keys } = context;
     
-    const sep = 10;
+    const sep = keys.focus ? 4 : 10;
     
     let angle = 0;
     angle -= (entity.store.total - 1) / 2 * sep;
@@ -10,7 +10,7 @@ function update(context)
     
     angle = (angle - 90) / 180 * Math.PI;
 
-    const distance = 500 / 60;
+    const distance = 30;
     
     return {
         position: {
