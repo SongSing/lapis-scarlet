@@ -1,27 +1,12 @@
 function init(context)
 {
     let { entity, stage } = context;
-    
-    return {
-        position: {
-            x: entity.spawnPosition.x + 200 * entity.index,
-            y: entity.age * 1
-        },
-        alive: true,
-        fire: false
-    };
+    entity.positionX = entity.spawnPositionX + 200 * entity.index;
+    entity.positionY = -64;
 }
 
 function update(context)
 {
     let { entity, stage } = context;
-    
-    return {
-        position: {
-            x: entity.spawnPosition.x + 200 * entity.index,
-            y: entity.age * 1
-        },
-        alive: true,
-        fire: false
-    };
+    entity.positionY = entity.age;
 }

@@ -1,3 +1,8 @@
+function init(context)
+{
+    context.entity.opacity = 0.5;
+}
+
 function update(context)
 {
     const { entity, stage, keys } = context;
@@ -11,12 +16,7 @@ function update(context)
     angle = (angle - 90) / 180 * Math.PI;
 
     const distance = 30;
-    
-    return {
-        position: {
-            x: entity.position.x + Math.cos(angle) * distance,
-            y: entity.position.y + Math.sin(angle) * distance
-        },
-        alive: entity.position.y > -32
-    };
+    entity.positionX += Math.cos(angle) * distance;
+    entity.positionY += Math.sin(angle) * distance;
+    entity.alive = entity.positionY > -32;
 }

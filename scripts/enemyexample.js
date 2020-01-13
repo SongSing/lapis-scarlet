@@ -1,48 +1,41 @@
 function init(context)
 {
-    return {
-        store: {
-            bulletCounter: 0
-        }
+    context.enemy.store = {
+        bulletCounter: 0
     };
 }
 
 function die(context)
 {
-    let { entity, stage } = context;
+    let { entity, stage, helpers } = context;
 
-    let stores = [];
-    for (let i = 0; i < 8; i++)
+    if (entity.hp === 0)
     {
-        stores.push({
-            index: i
-        });
+        for (let i = 0; i < 8; i++)
+        {
+            helpers.fireBullet("bullet_peri", false, entity.positionX, entity.positionY, {
+                index: i
+            });
+        }
     }
-
-    return {
-        fire: 8,
-        fireStores: stores
-    };
 }
 
 function update(context)
 {    
-    let { entity, stage } = context;
+    let { entity, stage, helpers } = context;
     const enemy = entity;
     let age = enemy.age / 60;
 
     let mult = 4;
-    let pos;
+    let posX, posY;
     age -= 1 / mult;
     let cutoff1 = (5 - 1) / mult;
     let cutoff2 = (9 - 1) / mult;
 
     if (age < cutoff1)
     {
-        pos = {
-            x: enemy.spawnPosition.x + age * 100 * mult,
-            y: enemy.spawnPosition.y
-        };
+        posX = enemy.spawnPositionX + age * 100 * mult;
+        posY = enemy.spawnPositionY;
     }
     else if (age < cutoff2)
     {
@@ -52,36 +45,27 @@ function update(context)
         let cx = Math.cos(angle) * r;
         let cy = Math.sin(angle) * r;
 
-        pos = {
-            x: enemy.spawnPosition.x + 100 * cutoff1 * mult + cx,
-            y: enemy.spawnPosition.y + r + cy
-        };
+        posX = enemy.spawnPositionX + 100 * cutoff1 * mult + cx;
+        posY = enemy.spawnPositionY + r + cy;
     }
     else
     {
         const a = age - cutoff2;
-        pos = {
-            x: enemy.spawnPosition.x + cutoff1 * 100 * mult + a * 100 * mult,
-            y: enemy.spawnPosition.y
-        };
+        posX = enemy.spawnPositionX + cutoff1 * 100 * mult + a * 100 * mult;
+        posY = enemy.spawnPositionY;
     }
 
-    let fire = false;
     let bulletCounter = entity.store.bulletCounter;
     bulletCounter++;
 
-    if (bulletCounter === 5)
+    if (bulletCounter === 10)
     {
         bulletCounter = 0;
-        fire = true;
+        helpers.fireBullet("bullet_peri", false, posX, posY);
     }
-
-    return {
-        position: pos,
-        fire: fire,
-        alive: pos.x < stage.size.x,
-        store: {
-            bulletCounter: bulletCounter
-        }
-    };
+    
+    enemy.alive = posX < stage.sizeX;
+    enemy.positionX = posX;
+    enemy.positionY = posY;
+    enemy.store.bulletCounter = bulletCounter;
 }

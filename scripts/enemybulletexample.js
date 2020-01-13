@@ -4,25 +4,15 @@ function update(context)
 
     if (!entity.store.hasOwnProperty("index"))
     {
-        const newY = entity.position.y + 500 / 60;
-    
-        return {
-            position: {
-                x: entity.position.x,
-                y: newY
-            },
-            alive: newY < (stage.size.y + 32)
-        };
+        const newY = entity.positionY + (entity.age / 50);
+        entity.positionY = newY;
+        entity.alive = newY < (stage.height + 32);
     }
     else
     {
         const angle = Math.PI * 2 * (entity.store.index / 8);
-        return {
-            position: {
-                x: entity.position.x + Math.cos(angle) * 5,
-                y: entity.position.y + Math.sin(angle) * 5
-            },
-            alive: entity.age < 500
-        };
+        entity.positionX = entity.positionX + Math.cos(angle) * 5;
+        entity.positionY = entity.positionY + Math.sin(angle) * 5;
+        entity.alive = entity.age < 500;
     }
 }
